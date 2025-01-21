@@ -250,6 +250,21 @@
 
             drawOther();
 
+            // 出界
+            if (x - ballRadius < 0) {
+                x = 0 + ballRadius;
+            }
+            if (x + ballRadius > canvas.width) {
+                x = canvas.width - ballRadius;
+            }
+            if (y - ballRadius < 0) {
+                y = 0 + ballRadius;
+            }
+            if (y + ballRadius > canvas.width) {
+                y = canvas.height - ballRadius;
+            }
+
+
             // 碰到牆壁反彈
             if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
                 dx = -dx;
