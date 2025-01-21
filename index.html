@@ -58,10 +58,11 @@
 
 <body>
     <div class="container">
+        <h1 id="clearHighScore">最高分數：<span id="highScore">0</span></h1>
         <canvas id="myCanvas" width="480" height="480"></canvas>
 
-        <h1>Score: <span id="score"></span><button id="runButton">遊戲開始</button></h1>
-        <h2>用方向鍵操作，你是<span class="blue">藍色的球</span>。<br>吃掉<span class="yellow">黃色的球</span>，<br>躲避<span
+        <h1>Score: <span id="score">0</span><button id="runButton">遊戲開始</button></h1>
+        <h2>用方向鍵操作，你是<span class="blue">藍色的球</span>。<br>觸碰<span class="yellow">黃色的球</span>，<br>躲避<span
                 class="gray">灰色的球。</span>
         </h2>
     </div>
@@ -76,6 +77,7 @@
 
         // 基礎的畫布設置
         const canvas = document.getElementById("myCanvas");
+        const highScore = document.getElementById("highScore");
         const ctx = canvas.getContext("2d");
 
         // 球的半徑
@@ -108,6 +110,18 @@
         // 分數
         let score = 0;
         let overGame = false;
+        let scoreHighVar = localStorage.getItem('highScore');
+        console.log('scoreHighVar', scoreHighVar);
+        highScore.innerHTML = scoreHighVar;
+
+
+        document.getElementById('clearHighScore').addEventListener('click', function (e) {
+            localStorage.setItem('highScore', 0);
+            scoreHighVar = 0;
+            scoreHighVar = localStorage.getItem('highScore');
+            console.log('scoreHighVar', scoreHighVar);
+            highScore.innerHTML = scoreHighVar;;
+        });
 
         // 遊戲開始按鈕
         document.getElementById("runButton").addEventListener("click", function () {
@@ -130,6 +144,11 @@
             document.location.reload();
             clearInterval(interval); // Needed for Chrome to end game
             overGame = true;
+
+            if (scoreHighVar < score) {
+                localStorage.setItem('highScore', score);
+                highScore.innerHTML = score;
+            }
         }
 
         // 鍵盤設定
@@ -178,6 +197,7 @@
             ctx.closePath();
         }
 
+        // 畫灰球
         function drawOther() {
             ctx.beginPath();
             ctx.arc(otherX, otherY, ballRadius, 0, Math.PI * 2);
@@ -186,6 +206,7 @@
             ctx.closePath();
         }
 
+        // 隨機指定食物位置
         function rngFood() {
             foodX = Math.floor(Math.random() * (canvas.width - 20) + 20);
             foodY = Math.floor(Math.random() * (canvas.height - 20) + 20);
@@ -197,6 +218,7 @@
             }
         }
 
+        // 吃掉食物
         function eatFood() {
             // 停止食物
             foodShow = false;
@@ -208,11 +230,14 @@
             rngFood();
         }
 
+        // 更新分數
         function updateScore() {
             document.getElementById('score').innerHTML = score;
         }
 
 
+
+        // 畫畫
         function draw() {
             // 在每次繪製前清除畫布
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -253,7 +278,7 @@
                 eatFood();
             }
 
-            if (!overGame && foodShow && Math.abs(otherX - x) <= 23 && Math.abs(otherY - y) <= 23) {
+            if (!overGame && foodShow && Math.abs(otherX - x) <= 20 && Math.abs(otherY - y) <= 20) {
                 gameOver();
             }
 
@@ -281,9 +306,7 @@
 
 
 
-
     </script>
-
 
 </body>
 
