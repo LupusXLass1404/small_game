@@ -67,6 +67,13 @@
     </div>
 
     <script>
+        /**
+         * 計算兩個數字的和
+         * @param {number} a - 第一個數字
+         * @param {number} b - 第二個數字
+         * @returns {number} - 兩個數字的和
+         */
+
         // 基礎的畫布設置
         const canvas = document.getElementById("myCanvas");
         const ctx = canvas.getContext("2d");
@@ -229,9 +236,17 @@
             // 另一顆球
             if (otherX + odx > canvas.width - ballRadius || otherX + odx < ballRadius) {
                 odx = -odx;
+                odx += Math.random() < 0.5 ? 1 : -1;
             }
             if (otherY + ody > canvas.height - ballRadius || otherY + ody < ballRadius) {
                 ody = -ody;
+                ody += Math.random() < 0.5 ? 1 : -1;
+            }
+            if (odx == 0) {
+                odx++
+            }
+            if (ody == 0) {
+                ody++
             }
 
             if (foodShow && Math.abs(foodX - x) <= 30 && Math.abs(foodY - y) <= 30) {
