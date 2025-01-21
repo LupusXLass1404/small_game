@@ -53,6 +53,11 @@
         .gray {
             color: #ddd;
         }
+
+        .big {
+            font-size: 36px;
+            /* text-decoration: underline; */
+        }
     </style>
 </head>
 
@@ -62,8 +67,8 @@
         <canvas id="myCanvas" width="480" height="480"></canvas>
 
         <h1>Score: <span id="score">0</span><button id="runButton">遊戲開始</button></h1>
-        <h2>用方向鍵操作，你是<span class="blue">藍色的球</span>。<br>觸碰<span class="yellow">黃色的球</span>，<br>躲避<span
-                class="gray">灰色的球。</span>
+        <h2>用 <span class="big">方向鍵</span> 操作，你是<span class="blue">藍色的球</span>。<br>觸碰<span
+                class="yellow">黃色的球</span>，<br>躲避<span class="gray">灰色的球。</span>
         </h2>
     </div>
 
@@ -234,8 +239,6 @@
         function updateScore() {
             document.getElementById('score').innerHTML = score;
         }
-
-
 
         // 畫畫
         function draw() {
